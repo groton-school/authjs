@@ -1,6 +1,6 @@
 {
   "name": "@groton/authjs-ltijs-ltiaas-credentials",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/groton-school/authjs/tree/main/packages/ltijs-ltiaas-credentials#readme",
   "repository": {
     "type": "github",
