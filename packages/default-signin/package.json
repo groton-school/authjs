@@ -2,6 +2,16 @@
   "name": "@groton/authjs-default-signin",
   "version": "0.0.0",
   "description": "Transparently direct users to a default Auth.js provider",
+  "homepage": "https://github.com/groton-school/authjs/tree/main/packages/default-signin#readme",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/groton-school/authjs.git",
+    "directory": "packages/default-signin"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
   "type": "module",
   "main": "./dist",
   "types": "./dist",

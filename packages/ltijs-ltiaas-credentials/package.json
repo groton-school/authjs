@@ -1,6 +1,16 @@
 {
   "name": "@groton/authjs-ltijs-ltiaas-credentials",
   "version": "0.0.0",
+  "homepage": "https://github.com/groton-school/authjs/tree/main/packages/ltijs-ltiaas-credentials#readme",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/groton-school/authjs.git",
+    "directory": "packages/ltijs-ltiaas-credentials"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -2,6 +2,16 @@
   "name": "@groton/authjs-veracross-provider",
   "version": "0.0.0",
   "description": "next-auth/Auth.js Provider for Veracross SSO",
+  "homepage": "https://github.com/groton-school/authjs/tree/main/packages/veracross-provider#readme",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/groton-school/authjs.git",
+    "directory": "packages/veracross-provider"
+  },
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
