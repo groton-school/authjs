@@ -1,6 +1,7 @@
 import { AdapterAccount } from '@auth/core/adapters';
 import { LTIaaSManager, LTIaaSRedirect } from '@groton/ltijs-ltiaas';
 import type { NextAuthResult } from 'next-auth'; // TODO decouple from next-auth
+                                                 // Issue URL: https://github.com/groton-school/authjs/issues/3
 import { saveClaims } from './InMemoryClaimStorage.js';
 
 interface Options {

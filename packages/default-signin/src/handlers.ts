@@ -1,4 +1,5 @@
 import { NextAuthResult } from 'next-auth'; // TODO decouple from next-auth
+                                            // Issue URL: https://github.com/groton-school/authjs/issues/1
 
 interface Options {
   signIn: NextAuthResult['signIn'];
