@@ -1,6 +1,6 @@
 {
   "name": "@groton/authjs-default-signin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Transparently direct users to a default Auth.js provider",
   "homepage": "https://github.com/groton-school/authjs/tree/main/packages/default-signin#readme",
   "repository": {
