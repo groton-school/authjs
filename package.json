@@ -1,0 +1,28 @@
+{
+  "name": "@groton/authjs",
+  "version": "0.0.0",
+  "description": "Use Auth.js to authenticate with Veracross, LTI as a Service in Google Cloud Run",
+  "license": "GPL-3.0-only",
+  "author": {
+    "name": "Seth Battis",
+    "email": "sbattis@groton.org"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "run-s build:*",
+    "build:compile": "lerna run build",
+    "build:paths": "monorepo-package-paths -f --author --homepage --repository",
+    "release": "run-s release:*",
+    "release:build": "lerna run --concurrency 1 release",
+    "release:git": "git push --follow-tags",
+    "release:login": "pnpm login",
+    "release:publish": "pnpm publish -r --access public"
+  },
+  "devDependencies": {
+    "@battis/commit": "^0.0.11",
+    "@battis/eslint": "^3.0.8",
+    "@battis/monorepo": "^1.0.0",
+    "@battis/prettier": "^2.0.11",
+    "lerna": "^9.0.7"
+  }
+}

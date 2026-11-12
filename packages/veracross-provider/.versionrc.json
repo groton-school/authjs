@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "veracross-provider/",
+  "releaseCommitMessageFormat": "chore: @groton/authjs-veracross-provider@{{currentTag}}"
+}

@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "firestore-adapter/",
+  "releaseCommitMessageFormat": "chore: @groton/authjs-firestore-adapter@{{currentTag}}"
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@groton/authjs-ltijs-ltiaas-credentials",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-s build:*",
+    "build:clean": "del ./dist",
+    "build:scripts": "tsc",
+    "release": "commit-and-tag-version --noBumpWhenEmptyChanges",
+    "prepack": "run-s build"
+  },
+  "dependencies": {
+    "@battis/lazy-firestore": "catalog:prod",
+    "@groton/ltijs-ltiaas": "^1.0.0",
+    "ltijs": "^7.0.7"
+  },
+  "devDependencies": {
+    "@battis/workspace": "catalog:dev",
+    "@tsconfig/node-lts": "catalog:dev",
+    "@types/node": "catalog:dev",
+    "del-cli": "catalog:dev",
+    "npm-run-all": "catalog:dev",
+    "typescript": "catalog:dev"
+  },
+  "peerDependencies": {
+    "@auth/core": "catalog:prod",
+    "next": "catalog:prod",
+    "next-auth": "catalog:prod"
+  }
+}

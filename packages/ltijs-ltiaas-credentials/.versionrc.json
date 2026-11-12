@@ -1,0 +1,5 @@
+{
+  "path": ".",
+  "tag-prefix": "ltijs-ltiaas-credentials/",
+  "releaseCommitMessageFormat": "chore: @groton/authjs-ltijs-ltiaas-credentials@{{currentTag}}"
+}
