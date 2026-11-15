@@ -1,9 +1,15 @@
-import { VerificationToken } from '@auth/core/adapters';
+import { Adapter, VerificationToken } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
 import { DateConverter } from '@battis/lazy-firestore/converters/Date';
+import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 import { CollectionReference } from '@google-cloud/firestore';
 
-export class VerificationTokensCollection extends Collection<VerificationToken> {
+type VerificationTokensAdapterTemplate = {
+  createVerificationToken: NonNullable<Adapter['createVerificationToken']>;
+  useVerificationToken: NonNullable<Adapter['useVerificationToken']>;
+};
+
+export class VerificationTokens extends Collection<VerificationToken> {
   public static readonly DEFAULT = { path: 'verificationTokens' };
 
   public constructor(options: CollectionOptions) {
@@ -11,23 +17,29 @@ export class VerificationTokensCollection extends Collection<VerificationToken> 
   }
 }
 
-export function VerificationTokens(
+export function VerificationTokensAdapter(
   {
-    path = VerificationTokensCollection.DEFAULT.path,
+    path = VerificationTokens.DEFAULT.path,
     ...options
-  }: CollectionOptions = VerificationTokensCollection.DEFAULT
+  }: CollectionOptions = VerificationTokens.DEFAULT
 ) {
-  const tokens = new VerificationTokensCollection({ path, ...options });
+  const tokens = new VerificationTokens({ path, ...options });
   return {
     createVerificationToken: async (
-      data: VerificationToken
+      token: VerificationToken
     ): Promise<VerificationToken | null> =>
-      (await tokens.create({ data, ...identify(data), strict: false })).data,
+      (
+        await tokens.create({
+          ...identify(token),
+          data: nullifyUndefinedProperties(token),
+          strict: false
+        })
+      ).data,
     useVerificationToken: async (
       token: Pick<VerificationToken, 'identifier' | 'token'>
     ): Promise<VerificationToken | null> =>
       (await tokens.delete({ ...identify(token), strict: false })).data
-  };
+  } satisfies VerificationTokensAdapterTemplate;
 }
 
 function identify({

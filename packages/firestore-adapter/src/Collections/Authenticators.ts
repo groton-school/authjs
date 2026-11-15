@@ -1,8 +1,20 @@
-import { AdapterAuthenticator } from '@auth/core/adapters';
+import { Adapter, AdapterAuthenticator } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
 import { DateConverter } from '@battis/lazy-firestore/converters/Date';
+import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 
-class AdapterAuthenticatorsCollection extends Collection<AdapterAuthenticator> {
+type AuthenticatorsAdapterTemplate = {
+  createAuthenticator: NonNullable<Adapter['createAuthenticator']>;
+  getAuthenticator: NonNullable<Adapter['getAuthenticator']>;
+  listAuthenticatorsByUserId: NonNullable<
+    Adapter['listAuthenticatorsByUserId']
+  >;
+  updateAuthenticatorCounter: NonNullable<
+    Adapter['updateAuthenticatorCounter']
+  >;
+};
+
+class Authenticators extends Collection<AdapterAuthenticator> {
   public static readonly DEFAULT = { path: 'authenticators' };
 
   public constructor(options: CollectionOptions) {
@@ -10,31 +22,31 @@ class AdapterAuthenticatorsCollection extends Collection<AdapterAuthenticator> {
   }
 }
 
-export function AdapterAuthenticators(
+export function AuthenticatorsAdapter(
   {
-    path = AdapterAuthenticatorsCollection.DEFAULT.path,
+    path = Authenticators.DEFAULT.path,
     ...options
-  }: CollectionOptions = AdapterAuthenticatorsCollection.DEFAULT
+  }: CollectionOptions = Authenticators.DEFAULT
 ) {
-  const authenticators = new AdapterAuthenticatorsCollection({
+  const authenticators = new Authenticators({
     path,
     ...options
   });
   return {
+    createAuthenticator: async (
+      authenticator: AdapterAuthenticator
+    ): Promise<AdapterAuthenticator> =>
+      (
+        await authenticators.create({
+          data: nullifyUndefinedProperties(authenticator),
+          id: authenticator.credentialID,
+          strict: true
+        })
+      ).data,
     getAuthenticator: async (
       id: AdapterAuthenticator['credentialID']
     ): Promise<AdapterAuthenticator | null> =>
       (await authenticators.read({ id, strict: false })).data,
-    createAuthenticator: async (
-      data: AdapterAuthenticator
-    ): Promise<AdapterAuthenticator> =>
-      (
-        await authenticators.create({
-          data,
-          id: data.credentialID,
-          strict: true
-        })
-      ).data,
     listAuthenticatorsByUserId: async (
       userId: AdapterAuthenticator['userId']
     ): Promise<AdapterAuthenticator[]> =>
@@ -54,5 +66,5 @@ export function AdapterAuthenticators(
           strict: true
         })
       ).data
-  };
+  } satisfies AuthenticatorsAdapterTemplate;
 }

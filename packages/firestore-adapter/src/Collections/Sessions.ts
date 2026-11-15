@@ -1,9 +1,18 @@
-import { AdapterSession } from '@auth/core/adapters';
+import { Adapter, AdapterSession } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
 import { DateConverter } from '@battis/lazy-firestore/converters/Date';
-import { users } from './AdapterUsers.js';
+import { deleteUndefinedProperties } from '@battis/lazy-firestore/directives/deleteUndefinedProperties';
+import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
+import { users } from './Users.js';
 
-export class AdapterSessionsCollection extends Collection<AdapterSession> {
+type SessionsAdapterTemplate = {
+  createSession: NonNullable<Adapter['createSession']>;
+  getSessionAndUser: NonNullable<Adapter['getSessionAndUser']>;
+  updateSession: NonNullable<Adapter['updateSession']>;
+  deleteSession: NonNullable<Adapter['deleteSession']>;
+};
+
+export class Sessions extends Collection<AdapterSession> {
   public static readonly DEFAULT = { path: 'sessions' };
   public constructor(options: CollectionOptions) {
     super({
@@ -13,19 +22,19 @@ export class AdapterSessionsCollection extends Collection<AdapterSession> {
   }
 }
 
-export function AdapterSessions(
+export function SessionsAdapter(
   {
-    path = AdapterSessionsCollection.DEFAULT.path,
+    path = Sessions.DEFAULT.path,
     ...options
-  }: CollectionOptions = AdapterSessionsCollection.DEFAULT
+  }: CollectionOptions = Sessions.DEFAULT
 ) {
-  const sessions = new AdapterSessionsCollection({ path, ...options });
+  const sessions = new Sessions({ path, ...options });
   return {
-    createSession: async (data: AdapterSession): Promise<AdapterSession> =>
+    createSession: async (session: AdapterSession): Promise<AdapterSession> =>
       (
         await sessions.create({
-          id: data.sessionToken,
-          data,
+          id: session.sessionToken,
+          data: nullifyUndefinedProperties(session),
           strict: true
         })
       ).data,
@@ -46,12 +55,12 @@ export function AdapterSessions(
       return null;
     },
     updateSession: async (
-      patch: Partial<AdapterSession> & Pick<AdapterSession, 'sessionToken'>
+      session: Partial<AdapterSession> & Pick<AdapterSession, 'sessionToken'>
     ): Promise<AdapterSession | null> =>
       (
         await sessions.update({
-          id: patch.sessionToken,
-          patch,
+          id: session.sessionToken,
+          patch: deleteUndefinedProperties(session),
           strict: false
         })
       ).data,
@@ -62,5 +71,5 @@ export function AdapterSessions(
           strict: false
         })
       ).data
-  };
+  } satisfies SessionsAdapterTemplate;
 }

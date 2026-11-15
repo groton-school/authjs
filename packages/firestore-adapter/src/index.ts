@@ -2,20 +2,14 @@ import path from 'node:path';
 import { Adapter } from '@auth/core/adapters';
 import { CollectionOptions } from '@battis/lazy-firestore';
 import { Firestore } from '@google-cloud/firestore';
-import {
-  AdapterAccounts,
-  AdapterAccountsCollection
-} from './AdapterAccounts.js';
-import { AdapterAuthenticators } from './AdapterAuthenticators.js';
-import {
-  AdapterSessions,
-  AdapterSessionsCollection
-} from './AdapterSessions.js';
-import { AdapterUsers, AdapterUsersCollection } from './AdapterUsers.js';
+import { Accounts, AccountsAdapter } from './Collections/Accounts.js';
+import { AuthenticatorsAdapter } from './Collections/Authenticators.js';
+import { Sessions, SessionsAdapter } from './Collections/Sessions.js';
+import { Users, UsersAdapter } from './Collections/Users.js';
 import {
   VerificationTokens,
-  VerificationTokensCollection
-} from './VerificationTokens.js';
+  VerificationTokensAdapter
+} from './Collections/VerificationTokensAdapter.js';
 
 interface Options extends Omit<CollectionOptions, 'path'> {
   basePath?: string;
@@ -39,39 +33,39 @@ export function FirestoreAdapter({
 }: Options = {}): Adapter {
   db = db || new Firestore({ databaseId, ...firestore });
   return {
-    ...AdapterUsers({
+    ...UsersAdapter({
       db,
       path: path.join(
         /*turbopackIgnore: true*/ basePath,
-        usersPath || AdapterUsersCollection.DEFAULT.path
+        usersPath || Users.DEFAULT.path
       )
     }),
-    ...AdapterAccounts({
+    ...AccountsAdapter({
       db,
       path: path.join(
         /*turbopackIgnore: true*/ basePath,
-        accountsPath || AdapterAccountsCollection.DEFAULT.path
+        accountsPath || Accounts.DEFAULT.path
       )
     }),
-    ...AdapterSessions({
+    ...SessionsAdapter({
       db,
       path: path.join(
         /*turbopackIgnore: true*/ basePath,
-        sessionsPath || AdapterSessionsCollection.DEFAULT.path
+        sessionsPath || Sessions.DEFAULT.path
       )
     }),
-    ...VerificationTokens({
+    ...VerificationTokensAdapter({
       db,
       path: path.join(
         /*turbopackIgnore: true*/ basePath,
-        verificationTokensPath || VerificationTokensCollection.DEFAULT.path
+        verificationTokensPath || VerificationTokens.DEFAULT.path
       )
     }),
-    ...AdapterAuthenticators({
+    ...AuthenticatorsAdapter({
       db,
       path: path.join(
         /*turbopackIgnore: true*/ basePath,
-        authenticatorsPath || AdapterAccountsCollection.DEFAULT.path
+        authenticatorsPath || Accounts.DEFAULT.path
       )
     })
   };

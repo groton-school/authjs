@@ -1,37 +1,50 @@
-import { AdapterAccount, AdapterUser } from '@auth/core/adapters';
+import { Adapter, AdapterAccount, AdapterUser } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
+import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 import { requireUnique } from '@battis/lazy-firestore/directives/requireUnique';
 import { CollectionReference } from '@google-cloud/firestore';
-import { users } from './AdapterUsers.js';
+import { users } from './Users.js';
 
-export class AdapterAccountsCollection extends Collection<AdapterAccount> {
+type AccountsAdapterTemplate = {
+  linkAccount: NonNullable<Adapter['linkAccount']>;
+  getAccount: NonNullable<Adapter['getAccount']>;
+  getUserByAccount: NonNullable<Adapter['getUserByAccount']>;
+  unlinkAccount: NonNullable<Adapter['unlinkAccount']>;
+};
+
+export class Accounts extends Collection<AdapterAccount> {
   public static readonly DEFAULT = { path: 'accounts' };
 }
 
-export function AdapterAccounts(
+export function AccountsAdapter(
   {
-    path = AdapterAccountsCollection.DEFAULT.path,
+    path = Accounts.DEFAULT.path,
     ...options
-  }: CollectionOptions = AdapterAccountsCollection.DEFAULT
+  }: CollectionOptions = Accounts.DEFAULT
 ) {
-  const accounts = new AdapterAccountsCollection({ path, ...options });
-  const getAccount = async (
+  const accounts = new Accounts({ path, ...options });
+
+  async function getAccount(
     providerAccountId: AdapterAccount['providerAccountId'],
     provider: AdapterAccount['provider']
-  ): Promise<AdapterAccount | null> =>
-    requireUnique({
+  ): Promise<AdapterAccount | null> {
+    return requireUnique({
       list: await accounts.list({
         ...identify({ provider, providerAccountId }),
         strict: false
       }),
       strict: false
     }).data;
+  }
+
   return {
-    linkAccount: async (data: AdapterAccount): Promise<AdapterAccount | null> =>
+    linkAccount: async (
+      account: AdapterAccount
+    ): Promise<AdapterAccount | null> =>
       (
         await accounts.create({
-          ...identify(data),
-          data,
+          ...identify(account),
+          data: nullifyUndefinedProperties(account),
           strict: false
         })
       ).data,
@@ -43,7 +56,7 @@ export function AdapterAccounts(
       AdapterAccount,
       'provider' | 'providerAccountId'
     >): Promise<AdapterUser | null> => {
-      const account = await getAccount(provider, providerAccountId);
+      const account = await getAccount(providerAccountId, provider);
       if (account) {
         return (await users().read({ id: account.userId, strict: false })).data;
       }
@@ -58,7 +71,7 @@ export function AdapterAccounts(
           strict: false
         })
       ).data ?? undefined
-  };
+  } satisfies AccountsAdapterTemplate;
 }
 
 function identify({
