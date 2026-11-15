@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.3](https://github.com/groton-school/authjs/compare/firestore-adapter/1.0.1...firestore-adapter/1.0.3) (2026-11-15)
+
+### Bug Fixes
+
+* nullify undefined properties on creation, delete undefined properties on update ([9ce52cc](https://github.com/groton-school/authjs/commit/9ce52ccccc7be4bf6391bbbdc758391e377e8fed))
 ## [1.0.2](https://github.com/groton-school/authjs/compare/firestore-adapter/1.0.1...firestore-adapter/1.0.2) (2026-11-15)
 
 ### Bug Fixes

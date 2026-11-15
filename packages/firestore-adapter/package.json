@@ -1,6 +1,6 @@
 {
   "name": "@groton/authjs-firestore-adapter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/groton-school/authjs/tree/main/packages/firestore-adapter#readme",
   "repository": {
     "type": "github",
