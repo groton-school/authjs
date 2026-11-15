@@ -35,7 +35,18 @@ export function AdapterAccounts(
           strict: false
         })
       ).data,
-    getAccount,
+    getAccount: async (
+      providerAccountId: AdapterAccount['providerAccountId'],
+      provider: AdapterAccount['provider']
+    ): Promise<AdapterAccount | null> => {
+      return requireUnique({
+        list: await accounts.list({
+          ...identify({ provider, providerAccountId }),
+          strict: false
+        }),
+        strict: false
+      }).data;
+    },
     getUserByAccount: async ({
       provider,
       providerAccountId
