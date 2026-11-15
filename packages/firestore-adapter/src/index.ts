@@ -9,7 +9,7 @@ import { Users, UsersAdapter } from './Collections/Users.js';
 import {
   VerificationTokens,
   VerificationTokensAdapter
-} from './Collections/VerificationTokensAdapter.js';
+} from './Collections/VerificationTokens.js';
 
 interface Options extends Omit<CollectionOptions, 'path'> {
   basePath?: string;
