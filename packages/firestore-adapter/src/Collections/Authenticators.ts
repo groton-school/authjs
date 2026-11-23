@@ -1,7 +1,6 @@
 import { Adapter, AdapterAuthenticator } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
 import { DateConverter } from '@battis/lazy-firestore/converters/Date';
-import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 
 type AuthenticatorsAdapterTemplate = {
   createAuthenticator: NonNullable<Adapter['createAuthenticator']>;
@@ -38,7 +37,7 @@ export function AuthenticatorsAdapter(
     ): Promise<AdapterAuthenticator> =>
       (
         await authenticators.create({
-          data: nullifyUndefinedProperties(authenticator),
+          data: authenticator,
           id: authenticator.credentialID,
           strict: true
         })

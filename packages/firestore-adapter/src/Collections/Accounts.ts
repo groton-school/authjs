@@ -1,6 +1,5 @@
 import { Adapter, AdapterAccount, AdapterUser } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
-import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 import { requireUnique } from '@battis/lazy-firestore/directives/requireUnique';
 import { CollectionReference } from '@google-cloud/firestore';
 import { users } from './Users.js';
@@ -44,7 +43,7 @@ export function AccountsAdapter(
       (
         await accounts.create({
           ...identify(account),
-          data: nullifyUndefinedProperties(account),
+          data: account,
           strict: false
         })
       ).data,

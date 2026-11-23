@@ -1,7 +1,6 @@
 import { Adapter, VerificationToken } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
 import { DateConverter } from '@battis/lazy-firestore/converters/Date';
-import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 import { CollectionReference } from '@google-cloud/firestore';
 
 type VerificationTokensAdapterTemplate = {
@@ -31,7 +30,7 @@ export function VerificationTokensAdapter(
       (
         await tokens.create({
           ...identify(token),
-          data: nullifyUndefinedProperties(token),
+          data: token,
           strict: false
         })
       ).data,

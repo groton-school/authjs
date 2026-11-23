@@ -1,7 +1,5 @@
 import { Adapter, AdapterUser } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
-import { deleteUndefinedProperties } from '@battis/lazy-firestore/directives/deleteUndefinedProperties';
-import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 import { requireUnique } from '@battis/lazy-firestore/directives/requireUnique';
 
 type UsersAdapterTemplate = {
@@ -43,7 +41,7 @@ export function UsersAdapter(
     createUser: async (user: AdapterUser): Promise<AdapterUser> =>
       (
         await users().create({
-          data: nullifyUndefinedProperties(user),
+          data: user,
           id: user.id,
           query: (ref) => ref.where('email', '==', user.email),
           strict: true
@@ -72,7 +70,7 @@ export function UsersAdapter(
       (
         await users().update({
           id: user.id,
-          patch: deleteUndefinedProperties(user),
+          patch: user,
           strict: true
         })
       ).data,

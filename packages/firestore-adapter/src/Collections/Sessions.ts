@@ -1,8 +1,6 @@
 import { Adapter, AdapterSession } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
 import { DateConverter } from '@battis/lazy-firestore/converters/Date';
-import { deleteUndefinedProperties } from '@battis/lazy-firestore/directives/deleteUndefinedProperties';
-import { nullifyUndefinedProperties } from '@battis/lazy-firestore/directives/nullifyUndefinedProperties';
 import { users } from './Users.js';
 
 type SessionsAdapterTemplate = {
@@ -30,14 +28,16 @@ export function SessionsAdapter(
 ) {
   const sessions = new Sessions({ path, ...options });
   return {
-    createSession: async (session: AdapterSession): Promise<AdapterSession> =>
-      (
+    createSession: async (session: AdapterSession): Promise<AdapterSession> => {
+      console.log(JSON.stringify({ session }, null, 2));
+      return (
         await sessions.create({
           id: session.sessionToken,
-          data: nullifyUndefinedProperties(session),
+          data: session,
           strict: true
         })
-      ).data,
+      ).data;
+    },
     getSessionAndUser: async (id: string) => {
       const session = (
         await sessions.read({
@@ -60,7 +60,7 @@ export function SessionsAdapter(
       (
         await sessions.update({
           id: session.sessionToken,
-          patch: deleteUndefinedProperties(session),
+          patch: session,
           strict: false
         })
       ).data,
