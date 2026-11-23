@@ -27,7 +27,6 @@
     "build": "run-s build:*",
     "build:clean": "del ./dist",
     "build:compile": "tsc",
-    "start": "echo 'noop'",
     "prepack": "run-s build",
     "release": "commit-and-tag-version --noBumpWhenEmptyChanges"
   },
