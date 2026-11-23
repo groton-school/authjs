@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.4](https://github.com/groton-school/authjs/compare/firestore-adapter/1.0.3...firestore-adapter/1.0.4) (2026-11-23)
+
+### Bug Fixes
+
+* undo over-zealous object clean-up ([e6a782c](https://github.com/groton-school/authjs/commit/e6a782c88f57f309bf0c8ad6d30a9aeb3999cf42))
 ## [1.0.3](https://github.com/groton-school/authjs/compare/firestore-adapter/1.0.1...firestore-adapter/1.0.3) (2026-11-15)
 
 ### Bug Fixes
