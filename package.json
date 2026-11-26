@@ -21,7 +21,7 @@
     "release": "run-s release:*",
     "release:build": "lerna run --concurrency 1 release",
     "release:git": "git push --follow-tags",
-    "release:login": "pnpm login",
+    "release:login": "pnpm require-pnpm-auth groton-it",
     "release:publish": "pnpm publish -r --access public"
   },
   "devDependencies": {
