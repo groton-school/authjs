@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.0](https://github.com/groton-school/authjs/compare/firestore-adapter/1.0.4...firestore-adapter/1.1.0) (2026-11-26)
+
+### Features
+
+* optionally encrypt access and refresh tokens ([c7a1869](https://github.com/groton-school/authjs/commit/c7a1869c4413693233ce8e7983329208b277d158))
 ## [1.0.4](https://github.com/groton-school/authjs/compare/firestore-adapter/1.0.3...firestore-adapter/1.0.4) (2026-11-23)
 
 ### Bug Fixes
