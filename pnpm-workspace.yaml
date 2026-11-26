@@ -17,13 +17,13 @@ minimumReleaseAgeExclude:
 catalogs:
   prod:
     '@auth/core': ^0.41.3
-    '@battis/lazy-firestore': ^1.1.0
+    '@battis/lazy-firestore': ^1.2.1
     next-auth: ^5.0.0-beta.32
     next: ^16.4.6
   dev:
     '@battis/workspace': ^0.0.12
     '@tsconfig/node-lts': ^24.0.1
-    '@types/node': ^24.19.2
+    '@types/node': ^24.19.4
     del-cli: ^8.0.1
     npm-run-all: ^4.1.5
     typescript: ^7.0.2

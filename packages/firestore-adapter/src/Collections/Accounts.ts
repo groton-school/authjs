@@ -1,5 +1,6 @@
 import { Adapter, AdapterAccount, AdapterUser } from '@auth/core/adapters';
 import { Collection, CollectionOptions } from '@battis/lazy-firestore';
+import { EncryptedString } from '@battis/lazy-firestore/converters/EncryptedString';
 import { requireUnique } from '@battis/lazy-firestore/directives/requireUnique';
 import { CollectionReference } from '@google-cloud/firestore';
 import { users } from './Users.js';
@@ -11,15 +12,40 @@ type AccountsAdapterTemplate = {
   unlinkAccount: NonNullable<Adapter['unlinkAccount']>;
 };
 
+interface Options extends CollectionOptions {
+  password?: string;
+  salt?: string;
+}
+
 export class Accounts extends Collection<AdapterAccount> {
   public static readonly DEFAULT = { path: 'accounts' };
+  public constructor(
+    {
+      path = Accounts.DEFAULT.path,
+      password,
+      salt,
+      converter,
+      ...options
+    }: Options = Accounts.DEFAULT
+  ) {
+    super({
+      path,
+      ...options,
+      converter: {
+        ...converter,
+        ...(password && salt
+          ? {
+              access_token: EncryptedString({ password, salt }),
+              refresh_token: EncryptedString({ password, salt })
+            }
+          : {})
+      }
+    });
+  }
 }
 
 export function AccountsAdapter(
-  {
-    path = Accounts.DEFAULT.path,
-    ...options
-  }: CollectionOptions = Accounts.DEFAULT
+  { path = Accounts.DEFAULT.path, ...options }: Options = Accounts.DEFAULT
 ) {
   const accounts = new Accounts({ path, ...options });
 

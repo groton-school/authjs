@@ -18,6 +18,8 @@ interface Options extends Omit<CollectionOptions, 'path'> {
   sessionsPath?: string;
   verificationTokensPath?: string;
   authenticatorsPath?: string;
+  password?: string;
+  salt?: string;
 }
 
 export function FirestoreAdapter({
@@ -26,6 +28,8 @@ export function FirestoreAdapter({
   basePath = '.',
   usersPath,
   accountsPath,
+  password,
+  salt,
   sessionsPath,
   verificationTokensPath,
   authenticatorsPath,
@@ -45,7 +49,9 @@ export function FirestoreAdapter({
       path: path.join(
         /*turbopackIgnore: true*/ basePath,
         accountsPath || Accounts.DEFAULT.path
-      )
+      ),
+      password,
+      salt
     }),
     ...SessionsAdapter({
       db,
