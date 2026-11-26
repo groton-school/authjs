@@ -29,8 +29,8 @@ catalogs:
       specifier: ^0.41.3
       version: 0.41.3
     '@battis/lazy-firestore':
-      specifier: ^1.2.1
-      version: 1.2.1
+      specifier: ^1.2.3
+      version: 1.2.3
     next:
       specifier: ^16.4.6
       version: 16.4.6
@@ -93,7 +93,7 @@ importers:
         version: 0.41.3
       '@battis/lazy-firestore':
         specifier: catalog:prod
-        version: 1.2.1(@google-cloud/firestore@9.4.1(supports-color@7.2.0))
+        version: 1.2.3(@google-cloud/firestore@9.4.1(supports-color@7.2.0))
       '@google-cloud/firestore':
         specifier: '*'
         version: 9.4.1(supports-color@7.2.0)
@@ -124,7 +124,7 @@ importers:
         version: 0.41.3
       '@battis/lazy-firestore':
         specifier: catalog:prod
-        version: 1.2.1(@google-cloud/firestore@9.4.1(supports-color@7.2.0))
+        version: 1.2.3(@google-cloud/firestore@9.4.1(supports-color@7.2.0))
       '@groton/ltijs-ltiaas':
         specifier: ^1.0.0
         version: 1.0.0(ltijs@7.0.7(socks@2.8.11)(supports-color@7.2.0))
@@ -267,8 +267,8 @@ packages:
   '@battis/import-package-json@0.1.13':
     resolution: {integrity: sha512-CK0GSBPVOFIBdgyNzYhnjXcrBTSJnXP/hMeVlpTR8Jo51FC1gg9QCQJceRNc8S0qzNavg+LzxGd6mOjqraU/xQ==}
 
-  '@battis/lazy-firestore@1.2.1':
-    resolution: {integrity: sha512-IVRpYbHSRvktEsYTnW4Q/BKhiL7+Fd1EBBdVsTa+ZDBRXojZFWIkyle+FxDyFmGmVir/lTkJm45wXACdbiALTQ==}
+  '@battis/lazy-firestore@1.2.3':
+    resolution: {integrity: sha512-ACbKnqyoRjevLRsTsOFpobV75QPzmzckXipb+CC9XC32r55UGZNJMkCMTODv9qeGP+b11T9lX4Z37/Y48Rfwcw==}
     peerDependencies:
       '@google-cloud/firestore': 9.x
 
@@ -5338,7 +5338,7 @@ snapshots:
       package-json-type: 1.1.2
       semver: 7.8.6
 
-  '@battis/lazy-firestore@1.2.1(@google-cloud/firestore@9.4.1(supports-color@7.2.0))':
+  '@battis/lazy-firestore@1.2.3(@google-cloud/firestore@9.4.1(supports-color@7.2.0))':
     dependencies:
       '@battis/descriptive-types': 0.3.2
       '@battis/typescript-tricks': 0.8.7
